@@ -1,6 +1,8 @@
 import { Component } from 'react';
 
 import { Section } from './Section/Section';
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
+import { Statistics } from './Statistics/Statistics';
 
 export class App extends Component {
   state = {
@@ -9,10 +11,7 @@ export class App extends Component {
     bad: 0,
   };
 
-  handleClick = evt => {
-    const value = evt.target.textContent.toLowerCase();
-    console.log(evt.target);
-
+  handleClick = value => {
     this.setState(prevState => {
       return {
         [value]: prevState[value] + 1,
@@ -28,29 +27,32 @@ export class App extends Component {
 
   countPositiveFeedbackPercentage = () => {
     const good = this.state.good;
-    const total = this.countTotalFeedback();
+    const total = this.countTotalFeedback(this.state);
     const positiveFeedback = Math.round((good / total) * 100);
     return positiveFeedback;
   };
 
   render() {
-    const total = this.countTotalFeedback();
-    const positivePercentage = this.countPositiveFeedbackPercentage();
+    const total = this.countTotalFeedback(this.state);
+    const positivePercentage = this.countPositiveFeedbackPercentage(this.state);
 
     return (
       <div>
-        <Section
-          title="Please leave feedback"
-          onLeaveFeedback={this.handleClick}
-        ></Section>
-        <Section
-          title="Statistics"
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          total={total}
-          positivePercentage={positivePercentage}
-        ></Section>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.handleClick}
+          />
+        </Section>
+        <Section title="Statistics">
+          <Statistics
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            total={total}
+            positivePercentage={positivePercentage}
+          />
+        </Section>
       </div>
     );
   }
