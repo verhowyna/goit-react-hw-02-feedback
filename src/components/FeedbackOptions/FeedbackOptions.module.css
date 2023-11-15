@@ -1,0 +1,10 @@
+.wrap {
+  display: flex;
+  gap: 20px;
+}
+
+button {
+  font-size: 20px;
+  background-color: rgb(86, 86, 243);
+  border-radius: 8px;
+}

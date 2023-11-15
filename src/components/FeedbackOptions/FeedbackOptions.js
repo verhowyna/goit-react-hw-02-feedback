@@ -1,6 +1,8 @@
+import css from './FeedbackOptions.module.css';
+
 export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
   return (
-    <div>
+    <div className={css.wrap}>
       {options.map(option => {
         return (
           <button
